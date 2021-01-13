@@ -30,12 +30,34 @@ function App() {
       setProjects([...projects, project]);
     }
 
+    async function handleUpdate(id) {
+      const response = await api.put(`projects/${id}`, {
+        title: `Projeto Alterado ${Date.now()}`,
+        owner: 'José Julio'
+      });
+
+    }
+
+    async function handleRemoveProject(id) {
+      await api.delete(`projects/${id}`);
+
+      setProjects(projects.filter(
+        project => project.id !== id
+      ));
+
+    }
+
     return (
         <>
           <Header title="Projects" />
           
           <ul>
-            {projects.map(project => <li key={project.id}>{project.title}</li>)}
+            {projects.map(project => 
+              <li key={project.id}>
+                {project.title}
+                <button onClick={() => handleUpdate(project.id)} >Alterar</button>
+                <button onClick={() => handleRemoveProject(project.id)}>Remover</button>
+              </li>)}
           </ul>
 
           <button type="button" onClick={handleAddProject} >Adicionar projeto</button>
