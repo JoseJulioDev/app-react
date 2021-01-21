@@ -36,6 +36,18 @@ function App() {
         owner: 'José Julio'
       });
 
+      const updateProject = response.data;
+
+      const projectsUpdate = projects.map(project => {
+        if(project.id === id) {
+          return updateProject;
+        }else {
+          return project;
+        }
+      });
+
+      setProjects(projectsUpdate);
+
     }
 
     async function handleRemoveProject(id) {
